@@ -1,0 +1,3 @@
+Upd2022/2/27
+GitHub上的仓库SSH：git@github.com:UltraHjr/BombMan.git
+; HTTPS:https://github.com/UltraHjr/BombMan.git
