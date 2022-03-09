@@ -9,59 +9,6 @@ using namespace std;
 
 
 const int ONE_SECOND = 1e6;
- class Player
-{
-private:
-	int x, y;
-	char sym;//字符表示玩家的显示形式 
-	int health;
-public:
-	Player(int x1, int y1, char ch, int h)	//构造函数，构造一个玩家 
-	:x(x1),y(y1),sym(ch),health(h)
-	{}
-	~Player()//析构函数
-	{
-		return;
-	}
-	void move(char t);//移动函数 
-	void upd_pos(int x1,int y1);//坐标更新函数，二元组(x1,y1)代表方向改变的权值，分为四种：
-	//上(-1,0),下(1,0),左(0,-1),右(0,1) 
-	int get_x();//获得x坐标
-	int get_y();
-	void setBomb();
-	void hurt(int d);
-	int get_h();
-};
-Player P(3, 11, '@', 2);
-char g[15][15] = {
-{' ','*','*','#','*','*','*','#','*','#','*',' ',' ','*',' '},
-{'#','*','*',' ','*','#','*',' ','*',' ',' ',' ','#','*',' '},
-{'*',' ','#',' ','#','*','*','#','#',' ','#',' ','#','*','#'},
-{'#','*',' ',' ',' ','*','#',' ','*','*',' ',' ',' ','*','*'},
-{'*','*','#',' ','#',' ','*',' ','#','*','#',' ','#',' ','#'},
-{' ','*','*','*','*',' ',' ',' ','#','*','#','*','*','*','*'},
-{'#','#','*','#',' ','#','#','#','*','*',' ','*','#',' ','#'},
-{'*','*',' ',' ','*',' ',' ','*','*','#','#','*','*',' ',' '},
-{'*','#','#',' ','#','*','*','#','*','*','#',' ','#',' ','#'},
-{' ','*',' ',' ',' ',' ','#','#','#','*',' ',' ',' ',' ',' '},
-{'*','*','#',' ','#',' ','*','*',' ',' ','#',' ','#','*','*'},
-{'#',' ','#','*','#',' ','#','*','#','*','*',' ','#','#','*'},
-{'*','*',' ',' ',' ','*','#',' ','*',' ','#','*',' ','*','*'},
-};
-int n = 15, m = 15;
-int xp = 3, yp = 11;
-void display()
-{
-	system("cls");//clear  screen
-	for (int i = 0 ; i <= 14 ; i++)
-	{
-		for (int j = 0 ; j <= 14 ; j++)
-			{
-				putchar(g[i][j]);
-			}
-		putchar('\n');
-	}
-} 
 class Bomb
 {
 	private:
@@ -85,7 +32,91 @@ class Bomb
 		int getx();
 		int gety();
 		int getd();
+		int gett();
 };
+ class Player
+{
+private:
+	int x, y;
+	char sym;//字符表示玩家的显示形式 
+	int health;
+public:
+	Player(int x1, int y1, char ch, int h)	//构造函数，构造一个玩家 
+	:x(x1),y(y1),sym(ch),health(h)
+	{}
+	~Player()//析构函数
+	{
+		return;
+	}
+	void move(char t);//移动函数 
+	void upd_pos(int x1,int y1);//坐标更新函数，二元组(x1,y1)代表方向改变的权值，分为四种：
+	//上(-1,0),下(1,0),左(0,-1),右(0,1) 
+	int get_x();//获得x坐标
+	int get_y();
+	void setBomb();
+	void hurt(int d);
+	int get_h();
+};
+class robot
+{
+	private:
+  int x, y;
+  int health;
+  public:
+  robot(int x1,int y1,int h)
+	:x(x1),y(y1),health(h)
+	{}
+	~robot()
+	{ return; }
+  	void setBomb();
+	void  check();
+	void 	move(char ch);
+	void run(Bomb B);
+  	void upd_pos(int x1,int y1);
+	int get_x(){
+	return this->x;
+		}
+	int get_y(){
+	return this->y;
+	}
+	int get_h();
+	void hurt(int d);
+};
+Player P(3, 11, '@', 2);
+robot R(4,4,1);
+char g[15][15] = {
+{' ','*','*','#','*','*','*','#','*','#','*',' ',' ','*',' '},
+{'#','*','*',' ','*','#','*',' ','*',' ',' ',' ','#','*',' '},
+{'*',' ','#',' ','#','*','*','#','#',' ','#',' ','#','*','#'},
+{'#','*',' ',' ',' ','*','#',' ','*','*',' ',' ',' ','*','*'},
+{'*','*','#',' ','#',' ','*',' ','#','*','#',' ','#',' ','#'},
+{' ','*','*','*','*',' ',' ',' ','#','*','#','*','*','*','*'},
+{'#','#','*','#',' ','#','#','#','*','*',' ','*','#',' ','#'},
+{'*','*',' ',' ','*',' ',' ','*','*','#','#','*','*',' ',' '},
+{'*','#','#',' ','#','*','*','#','*','*','#',' ','#',' ','#'},
+{' ','*',' ',' ',' ',' ','#','#','#','*',' ',' ',' ',' ',' '},
+{'*','*','#',' ','#',' ','*','*',' ',' ','#',' ','#','*','*'},
+{'#',' ','#','*','#',' ','#','*','#','*','*',' ','#','#','*'},
+{'*','*',' ',' ',' ','*','#',' ','*',' ','#','*',' ','*','*'},
+};
+int n = 15, m = 15;
+int xp = 3, yp = 11, xr = 4, yr = 4;
+void display()
+{
+	system("cls");//clear  screen
+	for (int i = 0 ; i <= 14 ; i++)
+	{
+		for (int j = 0 ; j <= 14 ; j++)
+			{
+				putchar(g[i][j]);
+			}
+		putchar('\n');
+	}
+} 
+inline int Bomb::gett()
+{
+	return this->t;
+}
 inline int Bomb::getd()
 {
 	return this->damage;
@@ -115,11 +146,19 @@ void Bomb::blow()
 		{
 			P.hurt(this->damage);
 		}
+	if(xr == x && yr == y)
+		{
+			R.hurt(this->damage);
+		}
 	for (int i = x + 1 ; i <= min(x + 2, 14); i++)
 		{
 			if(xp == i && yp == y)
 			{
 				P.hurt(this->damage);
+			}
+			if(xr == i && yr == y)
+			{
+				R.hurt(this->damage);
 			}
 			if(g[i][y] == ' ')
 				g[i][y] = '|';
@@ -137,6 +176,10 @@ void Bomb::blow()
 			{
 				P.hurt(this->damage);
 			}
+			if(xr == i && yr == y)
+			{
+				R.hurt(this->damage);
+			}
 			if(g[i][y] == ' ')
 				g[i][y] = '|';
 			if(g[i][y] == '*')
@@ -153,6 +196,10 @@ void Bomb::blow()
 			{
 				P.hurt(this->damage);
 			}
+			if(xr == x && yr == i)
+			{
+				R.hurt(this->damage);
+			}
 			if(g[x][i] == ' ')
 				g[x][i] = '-';
 			if(g[x][i] == '*')
@@ -168,6 +215,10 @@ void Bomb::blow()
 			if(xp == x && yp == i)
 			{
 				P.hurt(this->damage);
+			}
+			if(xr == x && yr == i)
+			{
+				R.hurt(this->damage);
 			}
 			if(g[x][i] == ' ')
 				g[x][i] = '-';
@@ -302,6 +353,106 @@ void Player::setBomb()
 
 
 
+void robot::upd_pos(int x1,int y1)
+{
+	int x = this->get_x() + x1, y = this->get_y() + y1;
+  if(x < 0 || x > 14 || y < 0 || y > 14 || g[x][y] != ' ')
+			return;
+	g[this->x][this->y] = ' ';
+	g[x][y] = '%';
+	this->x = x;
+	this->y = y;	
+	xr = x;
+	yr = y;
+}
+void robot::move(char t)
+{
+	if(t == 'w')
+		this->upd_pos(-1,0);
+	if(t == 's')
+		this->upd_pos(1,0);
+	if(t == 'a')
+		this->upd_pos(0,-1);
+	if(t == 'd')
+		this->upd_pos(0,1);
+	return;
+}
+void robot::run(Bomb B)
+{
+	if(B.getx() == -1)//如果处于安全状态，则随便走一下即可。
+		{
+			int t = rand();
+			t %= 5;
+			cout << t << endl;
+			if(t == 0)
+					return;
+			if(t == 1)
+				{this->move('d');return;}
+			if(t == 2)
+				{this->move('a');return;}
+			if(t == 3)
+				{this->move('s');return;}
+			if(t == 4)
+				{this->move('w');return;}
+		}
+  int x = B.getx(), y = B.gety();//贪心的方式进行逃跑
+  if(this->x == x && this->y <= y)
+{
+		this->move('a');
+		return;
+}
+	if(this->x == x && this->y > y)
+{
+	this->move('d');
+	return;
+}
+	if(this->y == y && this->x <= x)
+{
+	this->move('w');
+	return;
+}
+	if(this->y == y && this->x > x)
+{
+	this->move('s');
+	return;
+}
+
+}
+void robot::check()
+{
+	Bomb tmp;
+	int val = 5;
+	int x = this->x, y = this->y;
+	for (int i = 1 ; i <= nb; i++)
+		{
+				int x1 = b[i].getx(), y1 = b[i].gety(), t = b[i].gett(), r = b[i].getd();
+				if(t <= val && ((x == x1 && (y >= y1 - r && y <= y1 + r)) || (y == y1 && (x >= x1 - r && x <=x1 + r))) )//找到最危险的一颗炸弹
+						{
+								val = t;
+								tmp = b[i];
+						}
+	  }
+	run(tmp);
+	return;
+}
+void robot::setBomb()
+{
+	Bomb bomb(this->x, this->y, 4 , '&', 1);
+	b[++nb] = bomb;
+	BombRemove clearbomb(this->x, this->y, 6);
+  br[++nbr] = clearbomb;
+}
+inline int robot::get_h()
+{
+	return this->health;
+}
+inline void robot::hurt(int d)
+{
+	this->health = this->health - d;
+	return;
+}
+
+
 void deal_with_input()
 {
 	if(_kbhit())//检测输入情况 
@@ -325,7 +476,7 @@ int count = 0;
 方法：各自开一个队列！ 
 
 */
-bool flag = true;
+bool flag = true, win = false;
 void deal_with_time()
 {
 	//炸弹爆炸部分 
@@ -360,10 +511,15 @@ void deal_with_time()
 		{
 			flag = false;
 		}
+	if(R.get_h() == 0)
+		{
+			win = true;
+		}
 }
 int main()
 {
 	g[3][11] = '@';
+	g[4][4] = '%';
 	display();
 	while(1)
 	{
@@ -379,8 +535,19 @@ int main()
 						printf("\n YOU DIED!!!\n");
 						return 0;
 					}
+				if(win)
+					{
+						printf("\n YOU WIN!!!\n");
+						return 0;
+					}
 				count = 0;
+				R.check();
+				int s = rand();
+				s %= 4;
+				if(s == 1)
+					R.setBomb();
 			}
+		
 	}
 		return 0;
 }
